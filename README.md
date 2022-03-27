@@ -1,14 +1,13 @@
 # Ninext
+
+I'm dropping here a series of HTML code for Ninox that allows to add features :
+
+- **badges.html**: displays a badge on file and comment icons indicating the number of items contained in each.
+
+- **evalJS.html**: adds a hook function to the Ninox eval function which allows to add new user functions, like for example EvalJS to call JavaScript from the Ninox script. 
+
+- **completion.html**: sets the Ninox code editor to display an auto-completion list. To display the list, press **crtl+space** on Ninox Editor.
+
+To use the features, copy the content of the .html files into a formula. The functions are activated as soon as the formula is executed by Ninox.
  
-Je dépose ici une série de code HTML pour Ninox qui permet d’ajouter des fonctionnalités :
-
-**badges** : affiche un badge sur les icones fichiers et commentaires en indiquant le nombre d’élement contenu dans chacun d’eux.
-
-**evalJS** : ajoute une fonction crochet sur la fonction eval de Ninox ce qui permet d’ajouter de nouvelles fonctions utilisateur, comme par exemple EvalJS pour appeler JavaScript depuis le script Ninox. 
-
-**complétion** : paramètre l’éditeur de code de Ninox pour afficher une liste d’auto complétion. Pour faire afficher la liste, appuyez sur les touches _crtl+espace_.
-
-
-Pour utliser les fonctionnalités, copiez le contenu des fichiers .html dans une formule. Les fonctions sont activée à partir du moment où la formule est exécutée par Ninox.
- 
-N’hésitez pas à m’écrire si vous repèrer des bugs ou si vous avez besoin d’une fonctionnalité particulière.
+Don't hesitate to write to me if you spot any bugs or if you need a particular feature.

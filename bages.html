@@ -1,6 +1,4 @@
-var divId := "myDiv" + string(this.ID);
-html("
-<div id='" + divId + "'></div>
+<div id='myDiv" + string(this.ID) + "'></div>
 <script>
     debugger;
     //create global object to manage badges.
@@ -139,7 +137,7 @@ html("
             //badges.editor = ui.getCurrentEditor();
             if (!badges.editor) {
                 debugger;
-                var div = document.getElementById('" + divId + "');
+                var div = document.getElementById('myDiv" + string(this.ID) + "');
                 if (div) {
                     var data = $(div).closest('.component').data('component');
                     if (data) {
@@ -173,10 +171,9 @@ html("
     setHook();
 
     if (badges.initalized) {
-        var component = document.getElementById('" + divId + "');
+        var component = document.getElementById('myDiv" + string(this.ID) + "');
         if (component)
             component.innerText = 'badges initalized';
     }
 
 </script>
-")

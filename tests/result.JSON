@@ -1,0 +1,37 @@
+[
+    {
+        "type": "Invoice",
+        "typeId": "B",
+        "field": "NET Total",
+        "fieldId": "E",
+        "caption": "Somme de Total"
+    },
+    {
+        "type": "Invoice",
+        "typeId": "B",
+        "field": "VAT Amount",
+        "fieldId": "G",
+        "caption": "round(NET Total * VAT Rate) * 0.01"
+    },
+    {
+        "type": "Invoice",
+        "typeId": "B",
+        "field": "TOTAL",
+        "fieldId": "H",
+        "caption": "NET Total + VAT Amount"
+    },
+    {
+        "type": "Invoice Item",
+        "typeId": "C",
+        "field": "Item No",
+        "fieldId": "I",
+        "caption": "if Invoice then Total de Invoice Item[Invoice = myInvoice and number(ID) <= myID] else 0"
+    },
+    {
+        "type": "init",
+        "typeId": "H",
+        "field": "Init badges",
+        "fieldId": "A",
+        "caption": "html(\"\n\n<script>\n    //style base of badges\n    var badgeStyle = `\n            position: absolute;\n            display: flex;\n            top: 0px;\n            right: 0px;\n            background-color: red;\n            height: 15px;\n            line-height: 15px;\n            width: 15px;\n            text-align: center;\n            border-radius: 50%;\n            color: white;\n            justify-content: center;\n            font-size: smaller`;\n    // color of selection\n    var filesColor = '#4970ff';\n    var oldCommentColor = '#999999';\n    var newCommentColor = 'red';\n    // Threshold of new or old comment in ms. For 1 day = 1000ms * 60s * 60mn * 24h = 86400000ms\n    var oldCommentThreshold = 1000 * 60 * 60 * 24;\n\n    //event function called when tab changeed or popup opened\n    function selectTab(e) {\n        //call the original event fonction selectTab\n        if (this.oldSelectTab) this.oldSelectTab(e);\n\n        //recordver the current editor with links to html components\n        if (this.container) {\n            //load files of current record (is async function)\n            database.loadFiles(this.container.nid, (e, i) => {\n                // e = error text\n                // i = files array of id record this.id\n\n                // recover the attached files icon on current editor\n                var files = this.files.elTab[0];\n                if (files) {\n                    //recover or create the badge\n                    var badge = files.getElementsByTagName('span')[0];\n                    if (!badge) {\n                        badge = document.createElement('span');\n                        files.appendChild(badge);\n                    }\n\n                    //reading file list en exclude files connected to fields\n                    var n = database.typeOf(this.container.nid);\n                    var r = database.loadNodeSync(this.container.nid);\n                    if (n && r) {\n                        var s = {},\n                            l = n.fields;\n                        for (var c in l) {\n                            if (l.hasOwnProperty(c))\n                                if ('file' === l[c].base) {\n                                    var d = r[c];\n                                    d && (s[d] = !0)\n                                }\n                        }\n                        let f = []\n                        for (var u = 0; u < i.length; u++)\n                            s[(d = i[u]).name] || f.push(d);\n\n                        //number attached files\n                        var cnt = f.length;\n\n                        //set the badge\n                        badge.style.cssText = badgeStyle;\n                        badge.innerText = cnt.toString();\n                        badge.style.visibility = (cnt > 0) ? 'visible' : 'hidden';\n                        badge.style.backgroundColor = filesColor;\n                    }\n                };\n            });\n\n            //load files of current record (is async function)\n            database.loadComments(this.container.nid, (e, i) => {\n                // e = error text\n                // i = comments array of id record this.id\n\n                // recover the comment icon\n                var comments = this.comments ? this.comments.elTab[0] : null;\n                if (comments) {\n\n                    //recover or create the badge\n                    var badge = comments.getElementsByTagName('span')[0];\n                    if (!badge) {\n                        badge = document.createElement('span');\n                        comments.appendChild(badge);\n\n                    }\n\n                    //get durrent time to compare with comment date\n                    var ms = Date.now();\n\n                    //count the number of new and old comments \n                    var cntNew = i.reduce((total, el) => {\n                        if (ms - el[0] < oldCommentThreshold) total += 1;\n                        return total;\n                    }, 0);\n                    var cntAll = i.length;\n\n                    //set the badge with different color to indicate if there is new comments\n                    badge.style.cssText = badgeStyle;\n                    badge.innerText = cntNew ? cntNew.toString() : cntAll.toString();\n                    badge.style.visibility = (cntAll + cntNew > 0) ? 'visible' : 'hidden';\n                    badge.style.backgroundColor = (cntNew > 0) ? newCommentColor : oldCommentColor;\n\n                };\n            })\n        }\n\n    }\n\n    // On first call, put this selectTab in place to Ninox function and save the oldest\n    function setHook() {\n        var editor = ui.getCurrentEditor();\n        if (editor && !Object.getPrototypeOf(editor).oldSelectTab) {\n            if (!Object.getPrototypeOf(editor).oldSelectTab) {\n                Object.getPrototypeOf(editor).oldSelectTab = Object.getPrototypeOf(editor).selectTab;\n                Object.getPrototypeOf(editor).selectTab = selectTab;\n            }\n        }\n        else if (!editor)\n            setTimeout(setHook, 100);\n    }\n    setHook();\n\n\n\n</script>\n\")"
+    }
+]

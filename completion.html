@@ -686,7 +686,7 @@
                 Object.keys(database.schema.types).forEach(t => {
                     var type = database.schema.types[t];
                     if (type.caption.search(RegExp(keywords, 'i')) >= 0)
-                        found.push(getElement(getHumanName(type.caption), 'type', null, null, type.icon ? 'nav-item-icon ic ic-' + type.icon : 'i-setting-table'))
+                        found.push(getElement(getHumanName(type.caption), 'type', null, null, type.icon ? 'nav-item-icon  i-32-24 ic ic-' + type.icon : 'i-setting-table'))
 
                     Object.keys(type.fields).forEach(f => {
                         var field = type.fields[f];

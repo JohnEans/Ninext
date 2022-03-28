@@ -1,5 +1,9 @@
 # Ninext
 
+
+**WARNING**: the code I share with you here is to be used exclusively for personal use. **I do not recommend using it for commercial purposes**.
+
+
 I'm dropping here a series of HTML code for Ninox that allows to add features :
 
 - **badges.html**: displays a badge on file and comment icons indicating the number of items contained in each.

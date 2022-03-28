@@ -1,4 +1,4 @@
-<div>auto-complétion v1.00.03 intialized<br>press ctrl+space into script editor to use it</div>
+<div>auto-complétion v1.00.04 intialized<br>press ctrl+space into script editor to use it</div>
 <script>
     var style = `
     .CodeMirror-hints {
@@ -686,7 +686,7 @@
                 Object.keys(database.schema.types).forEach(t => {
                     var type = database.schema.types[t];
                     if (type.caption.search(RegExp(keywords, 'i')) >= 0)
-                        found.push(getElement(getHumanName(type.caption), 'type', null, null, 'nav-item-icon  i-32-24 ic ' + (type.icon ? 'ic-' + type.icon : 'i-setting-table')))
+                        found.push(getElement(getHumanName(type.caption), 'type', null, null, 'nav-item-icon ' + (type.icon ? 'ic-' + type.icon : 'i-32-24 ic i-setting-table')))
 
                     Object.keys(type.fields).forEach(f => {
                         var field = type.fields[f];

@@ -1,7 +1,9 @@
-# Ninext
+# Ninext 
+###### Laboratory for the creation and testing of extensions for Ninox
 
 
-**WARNING**: the code I share with you here is to be used exclusively for personal use. **I do not recommend using it for commercial purposes**.
+
+***WARNING**: the code I share with you here is to be used exclusively for personal use. **I do not recommend using it for commercial purposes***.
 
 
 I'm dropping here a series of HTML code for Ninox that allows to add features :

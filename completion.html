@@ -1,4 +1,4 @@
-<div>auto-complétion v1.00.04 intialized<br>press ctrl+space into script editor to use it</div>
+<div>auto-complétion v1.00.05 intialized<br>press ctrl+space into script editor to use it</div>
 <script>
     var style = `
     .CodeMirror-hints {
@@ -42,7 +42,6 @@
     }
     `;
 
-    debugger;
     var x = document.createElement('STYLE');
     var t = document.createTextNode(style);
     x.appendChild(t);
@@ -54,7 +53,7 @@
     // declare global: DOMRect
 
     (function (mod) {
-        debugger;
+        
         if (typeof exports == `object` && typeof module == `object`) // CommonJS
             mod(require(`../../lib/codemirror`));
         else if (typeof define == `function` && define.amd) // AMD
@@ -63,7 +62,6 @@
             mod(CodeMirror);
     })(function (CodeMirror) {
         `use strict`;
-        debugger;
         var HINT_ELEMENT_CLASS = `CodeMirror-hint`;
         var ACTIVE_HINT_ELEMENT_CLASS = `CodeMirror-hint-active`;
 
@@ -420,6 +418,7 @@
             }
 
             CodeMirror.signal(data, `select`, completions[this.selectedHint], hints.childNodes[this.selectedHint]);
+            debugger;
             return true;
         }
 
@@ -664,7 +663,7 @@
 
                 Object.keys(database.schema.globalScope).forEach(f => {
                     var func = database.schema.globalScope[f];
-                    debugger;
+                    
                     if (func.id.search(RegExp(keywords, 'i')) >= 0) {
                         strFunc = `${getHumanName(func.id)}(${func.params.map(p => { return getHumanName(p.caption) }).join(',')})`
                         found.push(getElement(strFunc, 'globalFunction', null, 'fn', 'i-32-24 i-field-formula', 'red'));
@@ -672,7 +671,7 @@
                 });
             }
             if (currentType) {
-                debugger;
+               
                 var type = database.schema.findType(currentType);
                 if (type) {
                     Object.keys(type.fields).forEach(f => {

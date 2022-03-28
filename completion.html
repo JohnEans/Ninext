@@ -1,7 +1,6 @@
-<div>auto-complétion v1.00.11 intialized<br>press ctrl+space into script editor to use it</div>
-<script>
-    var style = `
-    .CodeMirror-hints { 
+<div>auto-complétion v1.00.12 intialized<br>press ctrl+space into script editor to use it</div>
+<style id='exCoredMirrorStyle' type='text/css'>
+      .CodeMirror-hints { 
         position: absolute;
         z-index: 10;
         overflow: hidden;
@@ -40,12 +39,14 @@
     .CodeMirror-hint-label {
         color : inherit !important;
     }
-    `;
+    
+</style>
+<script>
 
-    var x = document.createElement('STYLE');
-    var t = document.createTextNode(style);
-    x.appendChild(t);
-    document.head.appendChild(x);
+    //put CCodeMirrorStyle inside the head element.
+    var style = document.getElementById('exCoredMirrorStyle');
+    document.head.appendChild(style);
+    
 
     // CodeMirror, copyright (c) by Marijn Haverbeke and others
     // Distributed under an MIT license: https://codemirror.net/LICENSE
@@ -636,6 +637,7 @@
                     colorName: colorName ? colorName : 'light-grey',
                     iconClassName: iconClassName,
                     render: function (elt, data, cur) {
+                        elt.classList.add('fn-tools-field');
                         var icon = document.createElement('div');
                         icon.className = 'fn-tools-field-icon i-' + this.colorName + ' ' + (this.iconClassName ? this.iconClassName : '');
                         elt.appendChild(icon);

@@ -98,6 +98,7 @@ window.exEvalJS = (function () {
         exEvalJS: function (fnt, params, db, cb) {
 
             try {
+                debugger;
                 var { javascript, arguments } = params;
                 var head = `var {${Object.keys(arguments).join(',')}} = args;`;
                 var all = head + '\n' + javascript;

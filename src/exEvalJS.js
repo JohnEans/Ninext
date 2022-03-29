@@ -46,7 +46,7 @@ window.exEvalJS = (function () {
             */
 
         evalFunctor.hook = function (fnt, params, db, ret) {
-
+            debugger;
             try {
                 //search if the first parameter of the eval function strictly contains the name of an extended function
                 if (evalFunctor.exFunctions[fnt]) {

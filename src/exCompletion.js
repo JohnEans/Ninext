@@ -61,7 +61,7 @@ var CCodeMirrorStyle = `
 
     // declare global: DOMRect
 
-    exCodeMirrorHint = (function () {
+    window.exCodeMirrorHint = (function () {
         "use strict";
 
         var HINT_ELEMENT_CLASS = "CodeMirror-hint";

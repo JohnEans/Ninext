@@ -56,7 +56,6 @@ var CCodeMirrorStyle = `
     
     // documentation online : https://share.ninox.com/xymklkqzebxkx8kcgtakgxhdd0ilk70xw8vo
 
-
     // CodeMirror, copyright (c) by Marijn Haverbeke and others
     // Distributed under an MIT license: https://codemirror.net/LICENSE
 

@@ -24,8 +24,8 @@ window.exEvalJS = (function () {
         evalFunctor.exFunctions = {};
 
         //add extended functions to the array
-        evalFunctor.exFunctions['exEvalJS'] = this.exEvalJS;
-        evalFunctor.exFunctions['exComments'] = this.exComments;
+        evalFunctor.exFunctions['exEvalJS'] = exEvalJS;
+        evalFunctor.exFunctions['exComments'] = exComments;
 
         /*
             Implementation of the new function eval in the Ninox functions array.
@@ -66,92 +66,93 @@ window.exEvalJS = (function () {
         Ctx.F[evalFunctor.functorId] = evalFunctor.hook;
     }
 
-    return {
 
-        /*
-        extended function that allows the execution of JavaScript code
-        eval('exEvalJS', {javascript:, arguments:{param1:, param2:...}})
-            javascript : string that contains the code to be executed
-            arguments : {
-                        param1, 
-                        param2… : parameters passed to the code as arguments to a function
-                        }
-         
-        return : result of JavaScript fonction.
-         
-        exemple :eval('exEvalJS', {
-                                    javascript: 'return a + b;'',
-                                    arguments : {
-                                                a: 10,
-                                                b: 20
-                                                }  
-                                });
-        result -> 30;
-        
-        important: for an asynchronous function, call cb('return value') rather than return 'return value'
-                                
-            exemple : promise.then( (value) => {
-                                                cb(value);
-                                                } ).then();
-        
-        */
-        exEvalJS: function (fnt, params, db, cb) {
 
+    /*
+    extended function that allows the execution of JavaScript code
+    eval('exEvalJS', {javascript:, arguments:{param1:, param2:...}})
+        javascript : string that contains the code to be executed
+        arguments : {
+                    param1, 
+                    param2… : parameters passed to the code as arguments to a function
+                    }
+     
+    return : result of JavaScript fonction.
+     
+    exemple :eval('exEvalJS', {
+                                javascript: 'return a + b;'',
+                                arguments : {
+                                            a: 10,
+                                            b: 20
+                                            }  
+                            });
+    result -> 30;
+    
+    important: for an asynchronous function, call cb('return value') rather than return 'return value'
+                            
+        exemple : promise.then( (value) => {
+                                            cb(value);
+                                            } ).then();
+    
+    */
+    function exEvalJS(fnt, params, db, cb) {
+
+        try {
+            debugger;
+            var { javascript, arguments } = params;
+            var head = `var {${Object.keys(arguments).join(',')}} = args;`;
+            var all = head + '\n' + javascript;
+            var fn = Function('args', 'cb', all,);
             try {
-                debugger;
-                var { javascript, arguments } = params;
-                var head = `var {${Object.keys(arguments).join(',')}} = args;`;
-                var all = head + '\n' + javascript;
-                var fn = Function('args', 'cb', all,);
-                try {
-                    var Result = fn(arguments, cb);
-                    //check if function use CallBack to return result asynchronously
-                    if (javascript.search(/\b(cb)\b/) < 0)
-                        return cb(Result);
-                } catch (err) {
-                    var msgErr =
-                        err.message + ' à la ligne ' + err.line - 2 + ', colonne ' + err.column;
-                    return cb(err)
-                }
+                var Result = fn(arguments, cb);
+                //check if function use CallBack to return result asynchronously
+                if (javascript.search(/\b(cb)\b/) < 0)
+                    return cb(Result);
             } catch (err) {
                 var msgErr =
-                    err.message + 'exEvalJS : à la ligne ' + err.line + ', colonne ' + err.column;
-
-                cb(msgErr);
+                    err.message + ' à la ligne ' + err.line - 2 + ', colonne ' + err.column;
+                return cb(err)
             }
-        },
+        } catch (err) {
+            var msgErr =
+                err.message + 'exEvalJS : à la ligne ' + err.line + ', colonne ' + err.column;
 
-        /*
-        getting the list of comments of a record
-        eval('exComments', {id:} )
-        return array of JSON with :
-            comment : string of comment,
-            userId : id of user post the comment,
-            date : date of post in milli seconde.
-        
-        exemple : eval('exComments', this.id);
-        result -> {comment:... ,userId:..., date:167533002 }
-        */
-        exComments: function (fnt, params, db, cb) {
-
-            database.loadComments(exUtils.getId(params), function (error, commentsArray) {
-                if (error)
-                    cb('exComments : ' + error);
-                else {
-                    var commentsList = [];
-                    for (num in commentsArray) {
-                        var o = {
-                            comment: commentsArray[num][2],
-                            userId: commentsArray[num][1],
-                            date: new Date(commentsArray[num][0]),
-                        };
-                        commentsList.push(o);
-                    }
-
-                    cb(commentsList);
-                }
-            });
+            cb(msgErr);
         }
+    };
+
+    /*
+    getting the list of comments of a record
+    eval('exComments', {id:} )
+    return array of JSON with :
+        comment : string of comment,
+        userId : id of user post the comment,
+        date : date of post in milli seconde.
+    
+    exemple : eval('exComments', this.id);
+    result -> {comment:... ,userId:..., date:167533002 }
+    */
+    function exComments(fnt, params, db, cb) {
+
+        database.loadComments(exUtils.getId(params), function (error, commentsArray) {
+            if (error)
+                cb('exComments : ' + error);
+            else {
+                var commentsList = [];
+                for (num in commentsArray) {
+                    var o = {
+                        comment: commentsArray[num][2],
+                        userId: commentsArray[num][1],
+                        date: new Date(commentsArray[num][0]),
+                    };
+                    commentsList.push(o);
+                }
+
+                cb(commentsList);
+            }
+        });
+    }
+    return {
     }
 })();
 

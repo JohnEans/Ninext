@@ -1,4 +1,4 @@
-
+debugger;
 window.exEvalJS = (function () {
 
     //get the address of the Eval function of NinoxScript

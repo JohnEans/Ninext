@@ -1,4 +1,4 @@
-<div id='badgesInit" + string(this.ID) + "'></div>
+<div id='badgesInit" + string(this._id) + "'></div>
 <script>
     debugger;
     //create global object to manage badges.
@@ -30,7 +30,6 @@
     function selectTab(e) {
         //call the original event fonction selectTab
         if (this.oldSelectTab) this.oldSelectTab(e);
-        debugger;
         try {
             //recordver the current badges.editor with links to html components
             if (this.container) {
@@ -38,7 +37,7 @@
                 //load files of current record (is async function)
                 database.loadFiles(this.container.nid, (e, i) => {
                     // e = error text
-                    // i = files array of id record this.id
+                    // i = files array of id record this._id
 
                     console.log('badges : files refresh')
 
@@ -88,7 +87,7 @@
                     //load files of current record (is async function)
                     database.loadComments(this.container.nid, (e, i) => {
                         // e = error text
-                        // i = comments array of id record this.id
+                        // i = comments array of id record this._id
 
                         console.log('badges : comments refresh')
 
@@ -136,8 +135,7 @@
         try {
             //badges.editor = ui.getCurrentEditor();
             if (!badges.editor) {
-                debugger;
-                var div = document.getElementById('badgesInit" + string(this.ID) + "');
+                var div = document.getElementById('badgesInit" + string(this._id) + "');
                 if (div) {
                     var data = $(div).closest('.component').data('component');
                     if (data) {
@@ -161,6 +159,8 @@
                         ui.getCurrentEditor().selectTab(ui.getCurrentEditor().currentTab.id)
                 }
 
+                
+
             }
             else if (!badges.editor)
                 setTimeout(setHook, 100);
@@ -171,7 +171,7 @@
     setHook();
 
     if (badges.initalized) {
-        var component = document.getElementById('badgesInit" + string(this.ID) + "');
+        var component = document.getElementById('badgesInit" + string(this._id) + "');
         if (component)
             component.innerText = 'badges initalized';
     }

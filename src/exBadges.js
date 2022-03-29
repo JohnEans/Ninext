@@ -169,7 +169,7 @@ function setHook() {
 setHook();
 
 if (exModules.myDiv) {
-    myDiv.innerText += 'badges initalized\n';
+    exModules.myDiv.innerText += 'badges initalized\n';
 }
 
 

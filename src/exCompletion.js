@@ -578,7 +578,7 @@ var CCodeMirrorStyle = `
         };
 
         CodeMirror.defineOption("hintOptions", null);
-    });
+    })();
 
     // CodeMirror, copyright (c) by Marijn Haverbeke and others
     // Distributed under an MIT license: https://codemirror.net/LICENSE
@@ -728,6 +728,6 @@ var CCodeMirrorStyle = `
             return found;
         }
 
-    });
+    })();
 
     CodeMirror.defaults.extraKeys = { 'Ctrl-Space': 'autocomplete' };

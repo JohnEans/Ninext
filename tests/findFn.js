@@ -1,4 +1,4 @@
-debugger;
+
 function getExpressions(obj) {
     var lst = [];
     for (var key in Object.keys(obj)) {
@@ -18,7 +18,7 @@ function getFindElements() {
     var lstFunctions = [];
     for (var t in database.schema.types) {
         var type = database.schema.types[t];
-        debugger;
+   
         var lstExpType = getExpressions(type);
         for (var f in type.fields) {
             var field = type.fields[f];
@@ -39,7 +39,7 @@ function getFindElements() {
             var e = Object.assign(element);
             delete e.exp; lst.push(element);
         }
-    } debugger; return lst;
+    } return lst;
 } var lst = getFindElements(); var r = findInList(lst, find, findType);
 return JSON.stringify(r);
 

@@ -1,8 +1,7 @@
 <div id='exLoadModule'></div>
 <script>
-
-  var GitHubAddress = 'https://raw.githubusercontent.com/JacquesTur/Ninext/main';
-  //GitHubAddress = 'https://ninext-eszs.emporter.app';
+  debugger;
+  var GitHubAddress = (window.NinextHostAddress?window.NinextHostAddress:'https://raw.githubusercontent.com/JacquesTur/Ninext/main');
 
 
   //Ce module est chargé à l'aide du même code que celui ci-dessous.
@@ -10,8 +9,8 @@
   //de base du serveur pour trouver les autres modules.
 
 
-  window.exModules = (function () {
-    this.log('exModule.constructor');
+  window.exModules = (function () { 
+//    this.log('exModule.constructor');
     return {
       get myDiv() {
         return document.getElementById('exLoadModule');
@@ -61,7 +60,6 @@
   //exModules.loadModule(rootAddress, 'Modules/exUtils.js');
   exModules.log('exModule chargé');
 
-  debugger;
   if (!window.exUtils) exModules.loadModule(GitHubAddress, 'src/exUtils.js', false);
 
   var configLoadModules = {

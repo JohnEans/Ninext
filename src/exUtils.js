@@ -143,7 +143,6 @@ window.exUtils = (function () {
     },
 
     extractJSONValueInScript: function (varName, script) {
-      debugger;
       var s = script.toString().match(`(var ${varName} := ).*`, 'gs');
       var s = s[0].toString().match('(\\{).*(\\})', 'gs');
       var value = this.fireEvalGlobal( s[0]);
@@ -181,7 +180,6 @@ window.exUtils = (function () {
 
   };
 })();
-debugger;
 console.log("exUtils chargé");
 
 

@@ -1,4 +1,4 @@
-debugger;
+
 window.exEvalJS = (function () {
 
     //get the address of the Eval function of NinoxScript
@@ -46,7 +46,6 @@ window.exEvalJS = (function () {
             */
 
         evalFunctor.hook = function (fnt, params, db, ret) {
-            debugger;
             try {
                 //search if the first parameter of the eval function strictly contains the name of an extended function
                 if (evalFunctor.exFunctions[fnt]) {
@@ -98,7 +97,6 @@ window.exEvalJS = (function () {
     function exEvalJS(fnt, params, db, cb) {
 
         try {
-            debugger;
             var { javascript, arguments } = params;
             var head = `var {${Object.keys(arguments).join(',')}} = args;`;
             var all = head + '\n' + javascript;

@@ -1,5 +1,5 @@
 (function (root, struct) {
-    debugger;
+
     var monTableau = [];
     var monObjet = { 'a': 'coucou' };
     monTableau.push(monObjet);

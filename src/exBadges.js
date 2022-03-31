@@ -1,5 +1,4 @@
 
-debugger;
 //create global object to manage exBadges.
 if (!window.exBadges) window.exBadges = {};
 

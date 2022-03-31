@@ -662,7 +662,8 @@ window.exCodeMirrorNx = (function () {
 
                 },
                 hint(cm, data, completion) {
-                if (date[0].text)
+                    debugger;
+                if (data[0].text)
                     cm.replaceRange(getText(completion), completion.from || data.from,
                         completion.to || data.to, "complete");
             }
@@ -751,4 +752,6 @@ window.exCodeMirrorNx = (function () {
 CodeMirror.defaults.extraKeys = {
     'Ctrl-Space': 'autocomplete'
 };
+
+exModules.log( 'AutoCompletion V1.01 loaded')
 

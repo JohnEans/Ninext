@@ -1,3 +1,4 @@
+var Version = '1.00';
 
 window.exEvalJS = (function () {
 
@@ -154,3 +155,4 @@ window.exEvalJS = (function () {
     }
 })();
 
+exModules.log( `EvalJS version ${Version} loaded`)

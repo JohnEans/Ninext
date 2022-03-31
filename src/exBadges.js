@@ -1,3 +1,4 @@
+var Version = '1.00';
 
 //create global object to manage exBadges.
 if (!window.exBadges) window.exBadges = {};
@@ -167,8 +168,4 @@ function setHook() {
 }
 setHook();
 
-if (exModules.myDiv) {
-    exModules.myDiv.innerText += 'badges initalized\n';
-}
-
-
+exModules.log( `Badges version ${Version} loaded`)

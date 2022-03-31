@@ -3,8 +3,7 @@
 //Display a "no items found" message when completion is not possible.
 //Case-insensitive sorting.
 
-
-
+var Version = '1.01';
 
 var CCodeMirrorStyle = `
     .CodeMirror-hints {
@@ -752,5 +751,5 @@ CodeMirror.defaults.extraKeys = {
     'Ctrl-Space': 'autocomplete'
 };
 
-exModules.log( 'AutoCompletion V1.01 loaded')
+exModules.log( `AutoCompletion version ${Version} loaded`)
 

@@ -1,3 +1,5 @@
+version = '1.00';
+
 window.exUtils = (function () {
   console.log("exutils.constructor");
   return {
@@ -180,6 +182,6 @@ window.exUtils = (function () {
 
   };
 })();
-console.log("exUtils chargé");
+exModules.log( `Utils version ${Version} loaded`)
 
 

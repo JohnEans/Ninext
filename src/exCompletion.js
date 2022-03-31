@@ -662,9 +662,8 @@ window.exCodeMirrorNx = (function () {
 
                 },
                 hint(cm, data, completion) {
-                    debugger;
-                if (data[0].text)
-                    cm.replaceRange(getText(completion), completion.from || data.from,
+                if (completion.text)
+                    cm.replaceRange(completion.text, completion.from || data.from,
                         completion.to || data.to, "complete");
             }
         }

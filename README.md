@@ -29,6 +29,6 @@ html(http("GET", "https://raw.githubusercontent.com/JacquesTur/Ninext/main/loadM
 ```
 
 The functions are activated as soon as the formula is executed by Ninox.
-Once the code is initialized, the afterLoadModules function will be called. In the example above, the function closes the window in which the initalization formula is located. You can change this code and perform any operation you like.
+**NOTA** : Once the code is initialized, the afterLoadModules function will be called. In the example above, the function closes the window in which the initalization formula is located. You can change this code and perform any operation you like.
 
 Don't hesitate to write to me if you spot any bugs or if you need a particular feature.

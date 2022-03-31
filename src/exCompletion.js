@@ -697,7 +697,7 @@ var CCodeMirrorStyle = `
                     Object.keys(type.fields).forEach(f => {
                         var field = type.fields[f];
                         if (field.caption.search(RegExp(keywords, 'i')) >= 0)
-                            found.push(getElement(getHumanName(field.caption), 'field', null, field.base, 'i-32-24 i-field-' + field.base))
+                            found.push(getElement(getHumanName(field.caption), 'field', `${getHumanName(field.caption)} (${getHumanName(type.caption)})`, field.base, 'i-32-24 i-field-' + field.base))
                     });
 
                 });

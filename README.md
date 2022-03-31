@@ -14,15 +14,21 @@ I'm dropping here a series of HTML code for Ninox that allows to add features :
 
 - **completion.html**: sets the Ninox code editor to display an auto-completion list. To display the list, press **crtl+space** on Ninox Editor.
 
-To use the features, copy the content of the .html files into a formula with html ninox function : `html("... content of .html file ...");`. The functions are activated as soon as the formula is executed by Ninox.
+To use the features, copy this code into a formula with html ninox function :  
  
-Another way is to put this code on the formula : `html(http("GET", Address of HTML source).result)`
-In this case, the code will be read directly GitHub and be updated in real time. 
+```
+var configLoadModules := {
+        completion: true,
+        badges: true,
+        evalJS: true
+    };
+function afterLoadModules() do
+    if not isAdminMode() then closeRecord() end
+end;
+html(http("GET", "https://raw.githubusercontent.com/JacquesTur/Ninext/main/loadModules.html").result)
+```
 
--badges : `html(http("GET", "https://raw.githubusercontent.com/JacquesTur/Ninext/main/badges.html").result)`
+The functions are activated as soon as the formula is executed by Ninox.
 
--evalJS : `html(http("GET", "https://raw.githubusercontent.com/JacquesTur/Ninext/main/evalJS.html").result)`
-
--completion : `html(http("GET", "https://raw.githubusercontent.com/JacquesTur/Ninext/main/completion.html").result)` 
 
 Don't hesitate to write to me if you spot any bugs or if you need a particular feature.

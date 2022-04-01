@@ -1,7 +1,7 @@
 <div id='exLoadModule'></div>
 <script>
   debugger;
-  var GitHubAddress = (window.NinextHostAddress?window.NinextHostAddress:'https://raw.githubusercontent.com/JacquesTur/Ninext/main');
+  var GitHubAddress = (window.NinextHostAddress ? window.NinextHostAddress : 'https://raw.githubusercontent.com/JacquesTur/Ninext/main');
 
 
   //Ce module est chargé à l'aide du même code que celui ci-dessous.
@@ -10,78 +10,78 @@
 
   var Version = '1.00';
 
-  window.exModules = (function () { 
-//    this.log('exModule.constructor');
-    return {
-      get myDiv() {
-        return document.getElementById('exLoadModule');
-      },
-      log: function (msg) {
-        if (this.myDiv) this.myDiv.innerText += msg + '\n';
-        else console.log(msg);
-      },
+  if (!window.exModules) {
+    window.exModules = (function () {
+      //    this.log('exModule.constructor');
+      return {
+        get myDiv() {
+          return document.getElementById('exLoadModule');
+        },
+        log: function (msg) {
+          if (this.myDiv) this.myDiv.innerText += msg + '\n';
+          else console.log(msg);
+        },
 
 
-      loadModule: function (Address, Script, Asynchrone) {
-        var rootAdr = Address ? Address : rootAddress
-        var adrScript = rootAdr + '/' + Script;
-        var fileModule = new XMLHttpRequest();
-        fileModule.addEventListener('load', function () {
-          try {
-            if (this.readyState == 4) {
-              if (this.status == 200) {
-                console.log('Chargement : ' + adrScript);
-                var fn = Function('rootAddress', this.responseText);
-                fn(Address);
-                console.log('script chargé : ' + adrScript);
+        loadModule: function (Address, Script, Asynchrone) {
+          var rootAdr = Address ? Address : rootAddress
+          var adrScript = rootAdr + '/' + Script;
+          var fileModule = new XMLHttpRequest();
+          fileModule.addEventListener('load', function () {
+            try {
+              if (this.readyState == 4) {
+                if (this.status == 200) {
+                  console.log('Chargement : ' + adrScript);
+                  var fn = Function('rootAddress', this.responseText);
+                  fn(Address);
+                  console.log('script chargé : ' + adrScript);
+                }
               }
+            } catch (err) {
+              var msgErr =
+                err.message + ' à la ligne ' + err.line + ', colonne ' + err.column;
+              exModules.log(' erreur au chargement de ' + Script + ' : ' + err);
             }
-          } catch (err) {
-            var msgErr =
-              err.message + ' à la ligne ' + err.line + ', colonne ' + err.column;
-            exModules.log(' erreur au chargement de ' + Script + ' : ' + err);
-          }
-        });
-        fileModule.addEventListener('error', function (e) {
-          exModules.log('Request error with status' + e.target.status + ' !');
-        });
+          });
+          fileModule.addEventListener('error', function (e) {
+            exModules.log('Request error with status' + e.target.status + ' !');
+          });
 
-        // Avec le paramètre false dans la fonction open, le send sera exécuté en synchrone,
-        // s'est à dire qu'il n'en sortira qu'apèrs avoir reçu le message retour du serveur et
-        // écecuté l'évanement 'load'.
-        console.log('GET : ' + adrScript);
+          // Avec le paramètre false dans la fonction open, le send sera exécuté en synchrone,
+          // s'est à dire qu'il n'en sortira qu'apèrs avoir reçu le message retour du serveur et
+          // écecuté l'évanement 'load'.
+          console.log('GET : ' + adrScript);
 
-        fileModule.open('GET', adrScript, Asynchrone ? Asynchrone : false);
-        fileModule.send();
-      },
+          fileModule.open('GET', adrScript, Asynchrone ? Asynchrone : false);
+          fileModule.send();
+        },
+      };
+    })();
+
+    // exemple d'utilitsation :
+    //exModules.loadModule(rootAddress, 'Modules/exUtils.js');
+    exModules.log(`Modules version ${Version} loaded`)
+
+    if (!window.exUtils) exModules.loadModule(GitHubAddress, 'src/exUtils.js', false);
+
+    var configLoadModules = {
+      completion: true,
+      badges: true,
+      evalJS: true
     };
-  })();
 
-  // exemple d'utilitsation :
-  //exModules.loadModule(rootAddress, 'Modules/exUtils.js');
-  exModules.log( `Modules version ${Version} loaded`)
-
-  if (!window.exUtils) exModules.loadModule(GitHubAddress, 'src/exUtils.js', false);
-
-  var configLoadModules = {
-    completion: true,
-    badges: true,
-    evalJS: true
-  };
-
-  if (exModules.myDiv) {
     configLoadModules = exUtils.extractJSONValueInFieldFn('configLoadModules', 'exLoadModule');
+
+    if (configLoadModules.completion) exModules.loadModule(GitHubAddress, 'src/exCompletion.js', false);
+    if (configLoadModules.badges) exModules.loadModule(GitHubAddress, 'src/exBadges.js', false);
+    if (configLoadModules.evalJS) exModules.loadModule(GitHubAddress, 'src/exEvalJS.js', false);
+
+
+    if (exModules.myDiv) {
+      exUtils.fireNxFunction('afterLoadModules', 'exLoadModule');
+    }
   }
-
-  if (!window.exCodeMirrorHint && configLoadModules.completion) exModules.loadModule(GitHubAddress, 'src/exCompletion.js', false);
-  if (!window.exBadges && configLoadModules.badges) exModules.loadModule(GitHubAddress, 'src/exBadges.js', false);
-  if (!window.exEvalJS && configLoadModules.evalJS) exModules.loadModule(GitHubAddress, 'src/exEvalJS.js', false);
-
-
-  if (exModules.myDiv) {
-    exUtils.fireNxFunction('afterLoadModules', 'exLoadModule');
-
-  }
-
+  else
+    exModules.log(`Modules version ${Version} already loaded`);
 
 </script>

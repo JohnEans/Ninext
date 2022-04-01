@@ -147,16 +147,19 @@ window.exUtils = (function () {
     extractJSONValueInScript: function (varName, script) {
       var s = script.toString().match(`(var ${varName} := ).*`, 'gs');
       var s = s[0].toString().match('(\\{).*(\\})', 'gs');
-      var value = this.fireEvalGlobal( s[0]);
+      var value = this.fireEvalGlobal(s[0]);
       return value;
     },
 
     extractJSONValueInFieldFn: function (varName, elementId) {
       var cpn = this.findNxComponentFromElementId(elementId);
+
       var dataField = this.findNxCompomentData(cpn);
-      return dataField.field.fn
-        ? this.extractJSONValueInScript(varName, dataField.field.fn)
-        : void 0;
+      if (cpn && dataField)
+        return (dataField.field.fn
+          ? this.extractJSONValueInScript(varName, dataField.field.fn)
+          : void 0);
+      else return void 0;
     },
 
     fireNxFunction: function (fnName, elementId) {
@@ -182,6 +185,6 @@ window.exUtils = (function () {
 
   };
 })();
-exModules.log( `Utils version ${Version} loaded`)
+exModules.log(`Utils version ${Version} loaded`)
 
 

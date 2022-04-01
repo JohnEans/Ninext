@@ -1,4 +1,4 @@
-version = '1.00';
+version = '1.01 beta';
 
 window.exUtils = (function () {
   console.log("exutils.constructor");

@@ -3,7 +3,7 @@
 //Display a "no items found" message when completion is not possible.
 //Case-insensitive sorting.
 
-var Version = '1.01';
+var Version = '1.01 beta';
 
 var CCodeMirrorStyle = `
     .CodeMirror-hints {

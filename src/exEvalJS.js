@@ -1,4 +1,4 @@
-var Version = '1.00';
+var Version = '1.00 beta';
 
 window.exEvalJS = (function () {
 

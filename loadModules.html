@@ -1,6 +1,6 @@
 <div id='exLoadModule'></div>
 <script>
-  debugger;
+
   var GitHubAddress = (window.NinextHostAddress ? window.NinextHostAddress : 'https://raw.githubusercontent.com/JacquesTur/Ninext/main');
 
 
@@ -64,17 +64,17 @@
 
     if (!window.exUtils) exModules.loadModule(GitHubAddress, 'src/exUtils.js', false);
 
-    var configLoadModules = {
+    var exConfigModules = {
       completion: true,
       badges: true,
       evalJS: true
     };
 
-    configLoadModules = exUtils.extractJSONValueInFieldFn('configLoadModules', 'exLoadModule');
+    exConfigModules = exUtils.extractJSONValueInFieldFn('configLoadModules', 'exLoadModule');
 
-    if (configLoadModules.completion) exModules.loadModule(GitHubAddress, 'src/exCompletion.js', false);
-    if (configLoadModules.badges) exModules.loadModule(GitHubAddress, 'src/exBadges.js', false);
-    if (configLoadModules.evalJS) exModules.loadModule(GitHubAddress, 'src/exEvalJS.js', false);
+    if (exConfigModules.completion) exModules.loadModule(GitHubAddress, 'src/exCompletion.js', false);
+    if (exConfigModules.badges) exModules.loadModule(GitHubAddress, 'src/exBadges.js', false);
+    if (exConfigModules.evalJS) exModules.loadModule(GitHubAddress, 'src/exEvalJS.js', false);
 
 
     if (exModules.myDiv) {

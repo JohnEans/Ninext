@@ -80,6 +80,7 @@ window.exCodeMirrorHint = (function () {
     // This is the old interface, kept around for now to stay
     // backwards-compatible.
     CodeMirror.showHint = function (cm, getHints, options) {
+        debugger;
         if (!getHints) return cm.showHint(options);
         if (options && options.async) getHints.async = true;
         var newOpts = { hint: getHints };
@@ -661,95 +662,118 @@ window.exCodeMirrorNx = (function () {
 
                 },
                 hint(cm, data, completion) {
-                if (completion.text)
-                    cm.replaceRange(completion.text, completion.from || data.from,
-                        completion.to || data.to, "complete");
-            }
-        }
-    }
-    var found = [];
-    if (!currentType) {
-        nxFunctions.forEach(fn => {
-            if (fn.function.search(RegExp(keywords, 'i')) >= 0) {
-                found.push(getElement(fn.function, 'nxFunction', null, 'apply', 'i-32-24 i-field-formula', 'blue'))
-            }
-        })
-
-        Object.keys(database.schema.globalScope).forEach(f => {
-            var func = database.schema.globalScope[f];
-
-            if (func.id.search(RegExp(keywords, 'i')) >= 0) {
-                strFunc = `${getHumanName(func.id)}(${func.params.map(p => { return getHumanName(p.caption) }).join(',')})`
-                found.push(getElement(strFunc, 'globalFunction', null, 'fn', 'i-32-24 i-field-formula', 'red'));
-            }
-        });
-    }
-    if (currentType) {
-
-        // Search if the currentType is a field that points to a table
-
-        var type = database.schema.findType(currentType);
-        if (!type) {
-            for (var t in database.schema.types) {
-                var field = database.schema.types[t].findElement(currentType);
-                if (field && field.base) {
-                    if (field.base == 'ref' || field.base == 'rev')
-                        type = field.refType;
-                    // if (field.base == 'dchoice' || field.base == 'dmulti')
-                    //     type = field.dchoiceValuesExp.type;
-                    if (field.base == 'fn' && field.exp && ['rid', 'nid'].includes(field.exp.returnType.base))
-                        type = field.exp.returnType.type;
+                    if (completion.text) {
+                        debugger;
+                        cm.replaceRange(completion.text, completion.from || data.from,
+                            completion.to || data.to, 'complete');
+                        if (completion.type == 'nxFunction')
+                            cm.moveH(-1, 'char');
+                    }
                 }
             }
         }
+        var found = [];
+        if (!currentType) {
+            nxFunctions.forEach(fn => {
+                if (fn.function.search(RegExp(keywords, 'i')) >= 0) {
+                    found.push(getElement(fn.function, 'nxFunction', null, 'apply', 'i-32-24 i-field-formula', 'blue'))
+                }
+            })
 
-        if (type) {
-            Object.keys(type.fields).forEach(f => {
-                var field = type.fields[f];
-                if (field.caption.search(RegExp(keywords, 'i')) >= 0)
-                    found.push(getElement(getHumanName(field.caption), 'field', null, field.base, 'i-32-24 i-field-' + field.base, 'grey'))
+            Object.keys(database.schema.globalScope).forEach(f => {
+                var func = database.schema.globalScope[f];
+
+                if (func.id.search(RegExp(keywords, 'i')) >= 0) {
+                    strFunc = `${getHumanName(func.id)}(${func.params.map(p => { return getHumanName(p.caption) }).join(',')})`
+                    found.push(getElement(strFunc, 'globalFunction', null, 'fn', 'i-32-24 i-field-formula', 'red'));
+                }
+            });
+        }
+        if (currentType) {
+
+            // Search if the currentType is a field that points to a table
+
+            var type = database.schema.findType(currentType);
+            if (!type) {
+                for (var t in database.schema.types) {
+                    var field = database.schema.types[t].findElement(currentType);
+                    if (field && field.base) {
+                        if (field.base == 'ref' || field.base == 'rev')
+                            type = field.refType;
+                        // if (field.base == 'dchoice' || field.base == 'dmulti')
+                        //     type = field.dchoiceValuesExp.type;
+                        if (field.base == 'fn' && field.exp && ['rid', 'nid'].includes(field.exp.returnType.base))
+                            type = field.exp.returnType.type;
+                    }
+                }
+            }
+
+            if (type) {
+                Object.keys(type.fields).forEach(f => {
+                    var field = type.fields[f];
+                    if (field.caption.search(RegExp(keywords, 'i')) >= 0)
+                        found.push(getElement(getHumanName(field.caption), 'field', null, field.base, 'i-32-24 i-field-' + field.base, 'grey'))
+                });
+            }
+
+        }
+        else {
+            Object.keys(database.schema.types).forEach(t => {
+                var type = database.schema.types[t];
+                if (type.caption.search(RegExp(keywords, 'i')) >= 0)
+                    found.push(getElement(getHumanName(type.caption), 'type', null, null, 'nav-item-icon ' + (type.icon ? 'ic ic-' + type.icon : 'i-32-24 ic i-setting-table')))
+
+                Object.keys(type.fields).forEach(f => {
+                    var field = type.fields[f];
+                    if (field.caption.search(RegExp(keywords, 'i')) >= 0)
+                        found.push(getElement(getHumanName(field.caption), 'field', `${getHumanName(type.caption)}`, field.base, 'i-32-24 i-field-' + field.base))
+                });
+
             });
         }
 
-    }
-    else {
-        Object.keys(database.schema.types).forEach(t => {
-            var type = database.schema.types[t];
-            if (type.caption.search(RegExp(keywords, 'i')) >= 0)
-                found.push(getElement(getHumanName(type.caption), 'type', null, null, 'nav-item-icon ' + (type.icon ? 'ic ic-' + type.icon : 'i-32-24 ic i-setting-table')))
-
-            Object.keys(type.fields).forEach(f => {
-                var field = type.fields[f];
-                if (field.caption.search(RegExp(keywords, 'i')) >= 0)
-                    found.push(getElement(getHumanName(field.caption), 'field', `${getHumanName(type.caption)}`, field.base, 'i-32-24 i-field-' + field.base))
-            });
-
-        });
-    }
-
-    found.sort((a, b) => {
-        var ra = a.displayText.search(RegExp(keywords, 'i'));
-        var rb = b.displayText.search(RegExp(keywords, 'i'));
-        if (ra == 0 && rb == 0)
-            return 0;
-        else
-            if (ra == 0)
-                return -1;
+        found.sort((a, b) => {
+            var ra = a.text.search(RegExp(keywords, 'i'));
+            var rb = b.text.search(RegExp(keywords, 'i'));
+            if (ra == 0 && rb == 0)
+                return 0;
             else
-                if (rb == 0)
-                    return 1;
-                else return 0;
-    })
-    if (!found.length) found.push(getElement('', '', `no items found    `, null, ''))
+                if (ra == 0)
+                    return -1;
+                else
+                    if (rb == 0)
+                        return 1;
+                    else return 0;
+        })
+        if (!found.length) found.push(getElement('', '', `no items found    `, null, ''))
 
-    return found;
+        return found;
+    }
+
+})();
+
+debugger;
+
+var shortKey = (exConfigModules && exConfigModules.completion && exConfigModules.completion.shortKey) ? exConfigModules.completion.shortKey : null;
+if (shortKey) {
+    if (!CodeMirror.defaults.extraKeys) CodeMirror.defaults.extraKeys = [];
+    CodeMirror.defaults.extraKeys[shortKey] = 'autocomplete';
 }
+exModules.log(`AutoCompletion version ${Version} loaded`)
 
-}) ();
 
-CodeMirror.defaults.extraKeys = {
-    'Ctrl-Space': 'autocomplete'
-};
+if (!CodeMirror.oldFromTextArea) {
+    CodeMirror.oldFromTextArea = CodeMirror.fromTextArea;
+    CodeMirror.fromTextArea = (textarea, options) => {
+        var cm = CodeMirror.oldFromTextArea(textarea, options);
 
-exModules.log( `AutoCompletion version ${Version} loaded`)
+        if (!shortKey)
+            cm.on("changes", (cm, changeObj) => {
+                if (changeObj[0].text[0].length && /[a-z0-9\.]$/.test(changeObj[0].text[0]) && !cm.state.completionActive)
+                    cm.showHint(null)
+
+            })
+        return cm;
+    }
+}
 

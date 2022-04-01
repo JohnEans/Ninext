@@ -12,7 +12,7 @@ I'm dropping here a series of HTML code for Ninox that allows to add features :
 
 - **evalJS.html**: adds a hook function to the Ninox eval function which allows to add new user functions, like for example EvalJS to call JavaScript from the Ninox script. 
 
-- **completion.html**: sets the Ninox code editor to display an auto-completion list. To display the list, press **crtl+space** on Ninox Editor.
+- **completion.html**: sets the Ninox code editor to display an auto-completion list. To display the list, put any character on Ninox Editor.
 
 To use the features, copy this code into a formula with html ninox function :  
  
